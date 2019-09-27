@@ -190,7 +190,7 @@ export default {
     itemsBelow(items, threshold) {
       let count = 0;
       items.forEach((item) => {
-        if (item.overallCoverage > 0 && item.overallCoverage < threshold) {
+        if (item.overallCoverage >= 0 && item.overallCoverage < threshold) {
           count += 1;
         }
       });
