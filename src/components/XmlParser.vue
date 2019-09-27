@@ -299,4 +299,8 @@ export default {
   font-weight: bolder;
   text-align: center;
 }
+
+b-table-column {
+  word-wrap: break-word;
+}
 </style>
