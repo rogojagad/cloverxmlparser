@@ -88,16 +88,16 @@
         <b-table :data="metrics">
           <template slot-scope="props">
             <b-table-column field="filesBelowNinety" label="Files Below 90% Count">
-              {{ props.row.filesBelowNinety }} {{ `(${countPercentage(props.row.filesBelowNinety, props.row.filesCount)}%)` }}
+              {{ props.row.filesBelowNinety }} {{ `(${countPercentage(props.row.filesBelowNinety, props.row.filesCount - props.row.ignoredFiles)}%)` }}
             </b-table-column>
             <b-table-column field="filesBelowNinetyFive" label="Files Below 95% Count">
-              {{ props.row.filesBelowNinetyFive }} {{ `(${countPercentage(props.row.filesBelowNinetyFive, props.row.filesCount)}%)` }}
+              {{ props.row.filesBelowNinetyFive }} {{ `(${countPercentage(props.row.filesBelowNinetyFive, props.row.filesCount - props.row.ignoredFiles)}%)` }}
             </b-table-column>
             <b-table-column field="namespacesBelowNinety" label="Namespaces Below 90% Count">
-              {{ props.row.namespacesBelowNinety }} {{ `(${countPercentage(props.row.namespacesBelowNinety, props.row.filesCount)}%)` }}
+              {{ props.row.namespacesBelowNinety }} {{ `(${countPercentage(props.row.namespacesBelowNinety, props.row.namespacesCount - props.row.ignoredNamespaces)}%)` }}
             </b-table-column>
             <b-table-column field="namespacesBelowNinetyFive" label="Namespaces Below 95% Count">
-              {{ props.row.namespacesBelowNinetyFive }} {{ `(${countPercentage(props.row.namespacesBelowNinetyFive, props.row.filesCount)}%)` }}
+              {{ props.row.namespacesBelowNinetyFive }} {{ `(${countPercentage(props.row.namespacesBelowNinetyFive, props.row.namespacesCount - props.row.ignoredNamespaces)}%)` }}
             </b-table-column>
           </template>
         </b-table>
