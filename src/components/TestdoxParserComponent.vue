@@ -165,7 +165,6 @@ export default {
     watch: {
         grouped: function() {
             this.reportData = this.summary = null;
-<<<<<<< HEAD
             this.$buefy.notification.open({
                 duration: 5000,
                 message: 'Grouping type changed. Please click analyze again.',
@@ -173,9 +172,6 @@ export default {
                 type: 'is-danger',
                 hasIcon: true
             });
-=======
-            this.analyzeTestdoxFile();
->>>>>>> 23ef77dce0453880fa248363c1d93a1e32813364
         }
     }
 }
