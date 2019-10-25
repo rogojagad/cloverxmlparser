@@ -1,15 +1,14 @@
 <template>
-  <div class="home">
+  <div class="content">
     <XmlParser/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import XmlParser from '@/components/XmlParser.vue'
 
 export default {
-  name: 'home',
+  name: 'coverage-parser',
   components: {
     XmlParser
   }

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import CoverageParser from './views/CoverageParser.vue'
+import TestdoxParser from './views/TestdoxParser.vue'
 
 Vue.use(Router)
 
@@ -8,8 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'coverage-parser',
+      component: CoverageParser,
     },
+    {
+      path: '/testdox',
+      name: 'testdox-parser',
+      component: TestdoxParser,
+    }
   ]
 })
