@@ -1,6 +1,3 @@
 alias dc="docker-compose"
 alias up="dc up -d"
 alias down="dc down"
-alias serve:dev="dc exec vue-app bash -c 'npm run serve'"
-alias install:dev="dc exec vue-app bash -c 'npm install'"
-alias bash:dev="dc exec vue-app bash"
