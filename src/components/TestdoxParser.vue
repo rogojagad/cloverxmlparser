@@ -56,7 +56,7 @@
                     </template>
                 </b-table>
             </div>
-            
+
             <!-- Detailed Report -->
             <h1 class="title">{{ this.grouped ? "Class" : "Method" }} Analysis</h1>
             <p class="subtitle">Sorted from maximum time elapsed to minimum.</p>
@@ -119,7 +119,6 @@
 import parseTestdox from '@/scripts/readtestdox';
 
 export default {
-    name: 'testdox-parser-component',
     data() {
         return {
             isOpen: 0,

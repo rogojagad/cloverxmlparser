@@ -79,7 +79,7 @@
             <b-table-column field="totalFiles" label="Total Files">
               {{ props.row.filesCount - props.row.ignoredFiles }}
             </b-table-column>
-            <b-table-column field="totalNamespaces" label="Total Namespaces">
+            <b-table-column field="totalNamespaces" label="Target Namespaces">
               {{ props.row.namespacesCount - props.row.ignoredNamespaces }}
             </b-table-column>
           </template>
@@ -97,7 +97,7 @@
               {{ props.row.namespacesBelowNinety }} {{ `(${countPercentage(props.row.namespacesBelowNinety, props.row.namespacesCount - props.row.ignoredNamespaces)}%)` }}
             </b-table-column>
             <b-table-column field="namespacesBelowNinetyFive" label="Namespaces Below 95% Count">
-              {{ props.row.namespacesBelowNinetyFive }} {{ `(${countPercentage(props.row.namespacesBelowNinetyFive, props.row.namespacesCount - props.row.ignoredNamespaces)}%)` }}
+              {{ props.row.namespacesBelowNinetyFive - props.row.namespacesBelowNinety }} {{ `(${countPercentage(props.row.namespacesBelowNinetyFive, props.row.namespacesCount - props.row.ignoredNamespaces)}%)` }}
             </b-table-column>
           </template>
         </b-table>
@@ -150,8 +150,6 @@
 import parseXml from '@/scripts/readxml';
 
 export default {
-  name: 'HelloWorld',
-
   data() {
     return {
       file: null,
@@ -229,7 +227,7 @@ export default {
       return files;
     },
     toString(value) {
-      return value >= 0 ? `${Math.round(value * 100) / 100}%` : 'SKIPPED' 
+      return value >= 0 ? `${Math.round(value * 100) / 100}%` : 'SKIPPED'
     },
     selectClass(coverage) {
       if (coverage < 0) {

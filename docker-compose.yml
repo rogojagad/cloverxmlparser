@@ -1,0 +1,10 @@
+version: "3"
+services:
+  clover-parser:
+    build: .
+    ports:
+      - 3030:8080
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    tty: true
