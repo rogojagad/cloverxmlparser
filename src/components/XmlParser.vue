@@ -3,15 +3,15 @@
     <div class="columns">
       <div class="column">
         <b-field class="file">
-            <b-upload v-model="file">
-                <a class="button is-primary">
-                    <b-icon icon="upload"></b-icon>
-                    <span>Click to select file</span>
-                </a>
-            </b-upload>
-            <span class="file-name" v-if="file">
-                {{ file.name }}
-            </span>
+          <b-upload v-model="file">
+            <a class="button is-primary">
+              <b-icon icon="upload"></b-icon>
+              <span>Click to select file</span>
+            </a>
+          </b-upload>
+          <span class="file-name" v-if="file">
+            {{ file.name }}
+          </span>
         </b-field>
       </div>
       <div class="column">
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <hr>
+      <hr />
       <h1 class="title">Project Metrics</h1>
       <div>
         <b-table :data="metrics">
@@ -47,21 +47,36 @@
             <b-table-column field="linesOfCodes" label="Lines of Code">
               {{ props.row.linesOfCodes }}
             </b-table-column>
-            <b-table-column field="nonCommentLinesOfCode" label="Non-Comment Lines of Code">
+            <b-table-column
+              field="nonCommentLinesOfCode"
+              label="Non-Comment Lines of Code"
+            >
               {{ props.row.nonCommentLinesOfCode }}
             </b-table-column>
-            <b-table-column v-bind:class="selectClass(props.row.statementCoverage)" field="statementCoverage" label="Statement Coverage">
+            <b-table-column
+              v-bind:class="selectClass(props.row.statementCoverage)"
+              field="statementCoverage"
+              label="Statement Coverage"
+            >
               {{ toString(props.row.statementCoverage) }}
             </b-table-column>
-            <b-table-column v-bind:class="selectClass(props.row.methodCoverage)" field="methodCoverage" label="Method Coverage">
+            <b-table-column
+              v-bind:class="selectClass(props.row.methodCoverage)"
+              field="methodCoverage"
+              label="Method Coverage"
+            >
               {{ toString(props.row.methodCoverage) }}
             </b-table-column>
-            <b-table-column v-bind:class="selectClass(props.row.overallCoverage)" field="overallCoverage" label="Overall Coverage">
+            <b-table-column
+              v-bind:class="selectClass(props.row.overallCoverage)"
+              field="overallCoverage"
+              label="Overall Coverage"
+            >
               {{ toString(props.row.overallCoverage) }}
             </b-table-column>
           </template>
         </b-table>
-        <hr>
+        <hr />
         <b-table :data="metrics">
           <template slot-scope="props">
             <b-table-column field="filesCount" label="Files Count">
@@ -73,7 +88,10 @@
             <b-table-column field="ignoredFiles" label="Ignored Files">
               {{ props.row.ignoredFiles }}
             </b-table-column>
-            <b-table-column field="ignoredNamespaces" label="Ignored Namespaces">
+            <b-table-column
+              field="ignoredNamespaces"
+              label="Ignored Namespaces"
+            >
               {{ props.row.ignoredNamespaces }}
             </b-table-column>
             <b-table-column field="totalFiles" label="Total Files">
@@ -84,59 +102,118 @@
             </b-table-column>
           </template>
         </b-table>
-        <hr>
+        <hr />
         <b-table :data="metrics">
           <template slot-scope="props">
-            <b-table-column field="filesBelowNinety" label="Files Below 90% Count">
-              {{ props.row.filesBelowNinety }} {{ `(${countPercentage(props.row.filesBelowNinety, props.row.filesCount - props.row.ignoredFiles)}%)` }}
+            <b-table-column
+              field="namespacesBelowNinety"
+              label="Namespaces On <90% - <95% Range Count"
+            >
+              {{ props.row.namespacesBelowNinety }}
+              {{
+                `(${countPercentage(
+                  props.row.namespacesBelowNinety,
+                  props.row.namespacesCount - props.row.ignoredNamespaces
+                )}%)`
+              }}
             </b-table-column>
-            <b-table-column field="filesBelowNinetyFive" label="Files Below 95% Count">
-              {{ props.row.filesBelowNinetyFive }} {{ `(${countPercentage(props.row.filesBelowNinetyFive, props.row.filesCount - props.row.ignoredFiles)}%)` }}
-            </b-table-column>
-            <b-table-column field="namespacesBelowNinety" label="Namespaces Below 90% Count">
-              {{ props.row.namespacesBelowNinety }} {{ `(${countPercentage(props.row.namespacesBelowNinety, props.row.namespacesCount - props.row.ignoredNamespaces)}%)` }}
-            </b-table-column>
-            <b-table-column field="namespacesBelowNinetyFive" label="Namespaces Below 95% Count">
-              {{ props.row.namespacesBelowNinetyFive - props.row.namespacesBelowNinety }} {{ `(${countPercentage(props.row.namespacesBelowNinetyFive, props.row.namespacesCount - props.row.ignoredNamespaces)}%)` }}
+            <b-table-column
+              field="namespacesBelowNinetyFive"
+              label="Namespaces On 95% - <97.5% Range Count"
+            >
+              {{
+                props.row.namespacesBelowNinetyFive -
+                props.row.namespacesBelowNinety
+              }}
+              {{
+                `(${countPercentage(
+                  props.row.namespacesBelowNinetyFive,
+                  props.row.namespacesCount - props.row.ignoredNamespaces
+                )}%)`
+              }}
             </b-table-column>
           </template>
         </b-table>
       </div>
-      <hr>
-      <h1 class="title">Group by Namespace ({{countCheckSkipAndPerfect(this.items)}})</h1>
+      <hr />
+      <h1 class="title">
+        Group by Namespace ({{ countCheckSkipAndPerfect(this.items) }})
+      </h1>
       <div>
         <b-table :data="items">
           <template slot-scope="props">
-            <b-table-column v-bind:class="selectClass(props.row.overallCoverage)" v-if="shouldShow(props.row.overallCoverage)" field="name" label="Package Name">
+            <b-table-column
+              v-bind:class="selectClass(props.row.overallCoverage)"
+              v-if="shouldShow(props.row.overallCoverage)"
+              field="name"
+              label="Package Name"
+            >
               {{ props.row.name }}
             </b-table-column>
-            <b-table-column v-bind:class="selectClass(props.row.overallCoverage)" v-if="shouldShow(props.row.overallCoverage)" field="methodCoverage" label="Method Coverage">
+            <b-table-column
+              v-bind:class="selectClass(props.row.overallCoverage)"
+              v-if="shouldShow(props.row.overallCoverage)"
+              field="methodCoverage"
+              label="Method Coverage"
+            >
               {{ toString(props.row.methodCoverage) }}
             </b-table-column>
-            <b-table-column v-bind:class="selectClass(props.row.overallCoverage)" v-if="shouldShow(props.row.overallCoverage)" field="statementCoverage" label="Statement Coverage">
+            <b-table-column
+              v-bind:class="selectClass(props.row.overallCoverage)"
+              v-if="shouldShow(props.row.overallCoverage)"
+              field="statementCoverage"
+              label="Statement Coverage"
+            >
               {{ toString(props.row.statementCoverage) }}
             </b-table-column>
-            <b-table-column v-bind:class="selectClass(props.row.overallCoverage)" v-if="shouldShow(props.row.overallCoverage)" field="overallCoverage" label="Overall Coverage">
+            <b-table-column
+              v-bind:class="selectClass(props.row.overallCoverage)"
+              v-if="shouldShow(props.row.overallCoverage)"
+              field="overallCoverage"
+              label="Overall Coverage"
+            >
               {{ toString(props.row.overallCoverage) }}
             </b-table-column>
           </template>
         </b-table>
       </div>
-      <hr>
-      <h1 class="title">Specific Files ({{countCheckSkipAndPerfect(this.fileItems)}})</h1>
+      <hr />
+      <h1 class="title">
+        Specific Files ({{ countCheckSkipAndPerfect(this.fileItems) }})
+      </h1>
       <div>
         <b-table :data="fileItems">
           <template slot-scope="props">
-            <b-table-column v-bind:class="selectClass(props.row.overallCoverage)" v-if="shouldShow(props.row.overallCoverage)" field="name" label="Package Name">
+            <b-table-column
+              v-bind:class="selectClass(props.row.overallCoverage)"
+              v-if="shouldShow(props.row.overallCoverage)"
+              field="name"
+              label="Package Name"
+            >
               {{ props.row.name }}
             </b-table-column>
-            <b-table-column v-bind:class="selectClass(props.row.overallCoverage)" v-if="shouldShow(props.row.overallCoverage)" field="methodCoverage" label="Method Coverage">
+            <b-table-column
+              v-bind:class="selectClass(props.row.overallCoverage)"
+              v-if="shouldShow(props.row.overallCoverage)"
+              field="methodCoverage"
+              label="Method Coverage"
+            >
               {{ toString(props.row.methodCoverage) }}
             </b-table-column>
-            <b-table-column v-bind:class="selectClass(props.row.overallCoverage)" v-if="shouldShow(props.row.overallCoverage)" field="statementCoverage" label="Statement Coverage">
+            <b-table-column
+              v-bind:class="selectClass(props.row.overallCoverage)"
+              v-if="shouldShow(props.row.overallCoverage)"
+              field="statementCoverage"
+              label="Statement Coverage"
+            >
               {{ toString(props.row.statementCoverage) }}
             </b-table-column>
-            <b-table-column v-bind:class="selectClass(props.row.overallCoverage)" v-if="shouldShow(props.row.overallCoverage)" field="statementCoverage" label="Overall Coverage">
+            <b-table-column
+              v-bind:class="selectClass(props.row.overallCoverage)"
+              v-if="shouldShow(props.row.overallCoverage)"
+              field="statementCoverage"
+              label="Overall Coverage"
+            >
               {{ toString(props.row.overallCoverage) }}
             </b-table-column>
           </template>
@@ -147,7 +224,7 @@
 </template>
 
 <script>
-import parseXml from '@/scripts/readxml';
+import parseXml from "@/scripts/readxml";
 
 export default {
   data() {
@@ -158,7 +235,7 @@ export default {
       fileItems: null,
       showSkipped: false,
       showPerfect: false,
-    }
+    };
   },
 
   methods: {
@@ -167,22 +244,27 @@ export default {
         parseXml.parseXmlFromFile(this.file, (items) => {
           this.items = items.namespaces;
           this.fileItems = this.stripAllFilesFromData(items.namespaces);
-          this.metrics = [{
-            ...items.metrics,
-            filesBelowNinety: this.itemsBelow(this.fileItems, 90),
-            filesBelowNinetyFive: this.itemsBelow(this.fileItems, 95),
-            namespacesBelowNinety: this.itemsBelow(items.namespaces, 90),
-            namespacesBelowNinetyFive: this.itemsBelow(items.namespaces, 95),
-          }];
+          this.metrics = [
+            {
+              ...items.metrics,
+              filesBelowNinety: this.itemsBelow(this.fileItems, 95),
+              filesBelowNinetyFive: this.itemsBelow(this.fileItems, 97.5),
+              namespacesBelowNinety: this.itemsBelow(items.namespaces, 95),
+              namespacesBelowNinetyFive: this.itemsBelow(
+                items.namespaces,
+                97.5
+              ),
+            },
+          ];
         });
       } else {
         this.$buefy.notification.open({
-            duration: 5000,
-            message: 'No file has been selected yet.',
-            position: 'is-bottom-right',
-            type: 'is-danger',
-            hasIcon: true
-        })
+          duration: 5000,
+          message: "No file has been selected yet.",
+          position: "is-bottom-right",
+          type: "is-danger",
+          hasIcon: true,
+        });
       }
     },
     itemsBelow(items, threshold) {
@@ -195,7 +277,7 @@ export default {
       return count;
     },
     countPercentage(current, total) {
-      return Math.round(((current / total) * 100) * 100) / 100;
+      return Math.round((current / total) * 100 * 100) / 100;
     },
     countCheckSkipAndPerfect(items) {
       let count = 0;
@@ -216,43 +298,43 @@ export default {
         let internalFiles = item.files;
         internalFiles.forEach((file) => {
           files.push(file);
-        })
+        });
       });
       files.sort((a, b) => {
         if (a.overallCoverage === -1) {
-            return -1;
+          return -1;
         }
         return a.overallCoverage > b.overallCoverage ? 1 : -1;
       });
       return files;
     },
     toString(value) {
-      return value >= 0 ? `${Math.round(value * 100) / 100}%` : 'SKIPPED'
+      return value >= 0 ? `${Math.round(value * 100) / 100}%` : "SKIPPED";
     },
     selectClass(coverage) {
       if (coverage < 0) {
-        return 'health-skipped';
+        return "health-skipped";
       }
       if (coverage < 50) {
-        return 'health-dangerous';
+        return "health-dangerous";
       }
       if (coverage < 90) {
-        return 'health-warning';
+        return "health-warning";
       }
       if (coverage < 95) {
-        return 'health-decent';
+        return "health-decent";
       }
       if (coverage < 100) {
-        return 'health-good';
+        return "health-good";
       }
-      return 'health-perfect';
+      return "health-perfect";
     },
     shouldShow(coverage) {
       if (coverage < 0) {
         return this.showSkipped;
       }
       return coverage < 100 || this.showPerfect;
-    }
-  }
-}
+    },
+  },
+};
 </script>
